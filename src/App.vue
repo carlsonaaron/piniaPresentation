@@ -89,7 +89,15 @@ const asyncCall3 = () => {
 }
 
 // Toast Demo
-const toastMessage = ref('Example toast message...');
+// const toastMessage = ref('Example toast message...');
+const toastMessage = computed({
+  get() {
+    return mainStore.toastMessage;
+  }, set(value) {
+    mainStore.toastMessage = value;
+  }
+});
+
 const sendToast = () => {
   mainStore.addToast(toastMessage.value);
 }

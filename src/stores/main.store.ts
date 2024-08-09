@@ -1,17 +1,25 @@
 import type { Toast } from '@/models/toast.model'
+import { useLocalStorage, type RemovableRef } from '@vueuse/core'
 import { defineStore } from 'pinia'
 
 type MainStoreState = {
   isLoadingArray: Array<boolean>
   toasts: Array<Toast>
+  toastMessage: RemovableRef<string>
 }
+
+const storedToastMessage = useLocalStorage(
+  'storedToastMessage',
+  localStorage.getItem('storedToastMessage') ?? ''
+)
 
 const useMainStore = defineStore({
   id: 'mainStore',
   state: () =>
     ({
       isLoadingArray: [],
-      toasts: []
+      toasts: [],
+      toastMessage: storedToastMessage
     }) as MainStoreState,
   getters: {
     itemsLoading: (state) => state.isLoadingArray.length,
